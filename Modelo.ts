@@ -1,6 +1,7 @@
 export interface Producto {
     nombre: string,
     imagen: string,
+    seleccion: boolean,
     precio: number
 }
 export interface ListadoProductos {
@@ -12,18 +13,38 @@ export interface Pedido {
     direccion: string;
 }
 
-export function buscarProducto(nombre: string): Ciudad {
-    // Agrega una nueva Ciudad a la base de datos
+export function mostrarProductos(): ListadoProductos[] {
+    // muestra todos los productos en la pagina principal en un mapa
+    
 }
 
-export function borrarCiudad(ciudad: Ciudad): void {
-    // Borra una ciudad de la base de datos
+export function buscarProducto(nombre: string): Producto {
+    // Busca el producto por el nombre en el JSON
+    // muestra los productos filtrados con mostrarProducto()
 }
 
-export function consultarListado(): Listado {
-    // Arma un Listado que contiene todas las ciudades en la base de datos
+export function agregarCarrito(): Producto {
+    /* no entendemos hasta que punto reslolver lo "mas facil posible", porque lo sencillo seria
+     tener seleccion como boolean en el producto, pero lo real es mostrar en algun lado los productos seleccionados 
+    interfaz seleccionados que tenga al producto, la cantidad y el boton ingresar direccion 
+     */
 }
 
-export function verificarAlertas(): Alerta[] {
-    // Proceso que se ejecuta cada una hora y chequea si hay que mandar una alerta
+export function mostrarCarrito(): Listado {
+    // ...
 }
+
+export function ingresarDatosPedido(): Listado {
+    // form -> direccion y id...
+}
+
+export function guardarPedidoBDD(): Listado {
+    // guarda el pedido en la base de datos...
+}
+
+export function mostrarPedidosAdmin(): Listado {
+    // opcion 1: agregar una pagina adicional del admin con todos los pedidos
+    // opcion 2: mandar los pedidos realizados al mail del admin
+
+}
+

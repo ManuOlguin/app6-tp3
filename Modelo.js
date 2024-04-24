@@ -1,19 +1,36 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.verificarAlertas = exports.consultarListado = exports.borrarCiudad = exports.buscarProducto = void 0;
+exports.mostrarPedidosAdmin = exports.guardarPedidoBDD = exports.ingresarDatosPedido = exports.mostrarCarrito = exports.agregarCarrito = exports.buscarProducto = exports.mostrarProductos = void 0;
+function mostrarProductos() {
+    // muestra todos los productos en la pagina principal en un mapa
+}
+exports.mostrarProductos = mostrarProductos;
 function buscarProducto(nombre) {
-    // Agrega una nueva Ciudad a la base de datos
+    // Busca el producto por el nombre en el JSON
+    // muestra los productos filtrados con mostrarProducto()
 }
 exports.buscarProducto = buscarProducto;
-function borrarCiudad(ciudad) {
-    // Borra una ciudad de la base de datos
+function agregarCarrito() {
+    /* no entendemos hasta que punto reslolver lo "mas facil posible", porque lo sencillo seria
+     tener seleccion como boolean en el producto, pero lo real es mostrar en algun lado los productos seleccionados
+    interfaz seleccionados que tenga al producto, la cantidad y el boton ingresar direccion
+     */
 }
-exports.borrarCiudad = borrarCiudad;
-function consultarListado() {
-    // Arma un Listado que contiene todas las ciudades en la base de datos
+exports.agregarCarrito = agregarCarrito;
+function mostrarCarrito() {
+    // ...
 }
-exports.consultarListado = consultarListado;
-function verificarAlertas() {
-    // Proceso que se ejecuta cada una hora y chequea si hay que mandar una alerta
+exports.mostrarCarrito = mostrarCarrito;
+function ingresarDatosPedido() {
+    // form -> direccion y id...
 }
-exports.verificarAlertas = verificarAlertas;
+exports.ingresarDatosPedido = ingresarDatosPedido;
+function guardarPedidoBDD() {
+    // guarda el pedido en la base de datos...
+}
+exports.guardarPedidoBDD = guardarPedidoBDD;
+function mostrarPedidosAdmin() {
+    // opcion 1: agregar una pagina adicional del admin con todos los pedidos
+    // opcion 2: mandar los pedidos realizados al mail del admin
+}
+exports.mostrarPedidosAdmin = mostrarPedidosAdmin;
