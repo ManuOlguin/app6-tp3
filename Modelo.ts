@@ -1,17 +1,18 @@
-export interface Ciudad {
+export interface Producto {
     nombre: string,
-    temperatura: number
+    imagen: string,
+    precio: number
 }
-export interface Listado {
-    ciudades: Ciudad[]
+export interface ListadoProductos {
+    productos: Producto[]
 }
-export interface Alerta {
-    cuando: Date,
-    donde: Ciudad,
-    temperaturaActual: number
+export interface Pedido {
+    id: string;
+    productos: Producto[];
+    direccion: string;
 }
 
-export function agregarCiudad(nombre: string): Ciudad {
+export function buscarProducto(nombre: string): Ciudad {
     // Agrega una nueva Ciudad a la base de datos
 }
 
