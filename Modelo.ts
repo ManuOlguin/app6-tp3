@@ -1,50 +1,50 @@
 export interface Producto {
     nombre: string,
     imagen: string,
-    seleccion: boolean,
     precio: number
 }
 export interface ListadoProductos {
     productos: Producto[]
 }
-export interface Pedido {
+export interface Carrito {
     id: string;
     productos: Producto[];
+    cantidad: number;
+}
+export interface Pedido {
+    productos: Carrito[];
     direccion: string;
 }
 
 export function mostrarProductos(): ListadoProductos[] {
     // muestra todos los productos en la pagina principal en un mapa
-    
 }
 
-export function buscarProducto(nombre: string): Producto {
+export function buscarProductoPorNombre (nombre: string): Producto {
     // Busca el producto por el nombre en el JSON
     // muestra los productos filtrados con mostrarProducto()
 }
 
-export function agregarCarrito(): Producto {
-    /* no entendemos hasta que punto reslolver lo "mas facil posible", porque lo sencillo seria
-     tener seleccion como boolean en el producto, pero lo real es mostrar en algun lado los productos seleccionados 
-    interfaz seleccionados que tenga al producto, la cantidad y el boton ingresar direccion 
-     */
+export function agregarAlCarrito(producto:Producto[], cantidad:number): Carrito {
+    // agrega productos seleccionados a carrito en un array, identificado por un id
+    // pide también el parámetro cantidad para saber qué cantidad de cada producto quiere el usuario  
 }
 
-export function mostrarCarrito(): Listado {
-    // ...
+export function borrarProductoDeCarrito(producto: Producto): void {
+    // Borra un producto del Carrito 
 }
 
-export function ingresarDatosPedido(): Listado {
-    // form -> direccion y id...
+
+export function mostrarCarrito(): Carrito {
+    // en una nueva página (carrito) mostrar todos los productos agregados
 }
 
-export function guardarPedidoBDD(): Listado {
-    // guarda el pedido en la base de datos...
+export function ingresarDatosPedido(): Pedido {
+    // solicitar mediante un formulario la dirección del cliente (donde se enviará el pedido)
 }
 
-export function mostrarPedidosAdmin(): Listado {
-    // opcion 1: agregar una pagina adicional del admin con todos los pedidos
-    // opcion 2: mandar los pedidos realizados al mail del admin
+export function mandarMailAdmin(): Pedido {
+    // mandar los pedidos realizados al mail del admin
 
 }
 
