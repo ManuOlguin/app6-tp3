@@ -11,17 +11,18 @@ export interface ListadoConBusqueda {
     palabra_buscada: string,
     productos: ListadoProductos
 }
-export interface ProductosEnCarrito {
+export interface ProductoEnCarrito {
     producto: Producto,
     cantidad: number,
 }
 export interface Carrito {
-    productos_carrito: ProductosEnCarrito[]; //array de productos pedidos y sus cantidades
+    productos_carrito: ProductoEnCarrito[]; //array de productos pedidos y sus cantidades
 }
 export interface Pedido {
     id: string;
     productos_pedidos: Carrito;
     direccion: string;
+    nombre_cliente: string;
     precio_total: number;
 }
 
@@ -65,13 +66,5 @@ export function agregarPedido(direccion: string, carrito: Carrito): Pedido {
 }
 
 export function enviarCorreo(pedido:Pedido) {
-    const msg = {
-        to: 'tudireccion@email.com',
-        from: 'tudireccion@email.com', // Cambia esto por tu dirección de correo
-        subject: 'Nuevo Pedido:' + pedido.id,
-        text: 'Te ha llegado el pedido' + pedido.id + 'que debes enviar a la siguiente dirección:' + pedido.direccion 
-        + '.<br>'
-        + 'Pedido' + pedido.id + ':' + '<br>' + pedido.productos_pedidos
-        + 'A cobrar:' + pedido.precio_total
-    };
+ // Envía datos del pedido por correo al admin. Explicada en el README.
 }

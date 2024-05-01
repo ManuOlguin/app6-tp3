@@ -41,14 +41,6 @@ function agregarPedido(direccion, carrito) {
 }
 exports.agregarPedido = agregarPedido;
 function enviarCorreo(pedido) {
-    const msg = {
-        to: 'tudireccion@email.com',
-        from: 'tudireccion@email.com', // Cambia esto por tu dirección de correo
-        subject: 'Nuevo Pedido:' + pedido.id,
-        text: 'Te ha llegado el pedido' + pedido.id + 'que debes enviar a la siguiente dirección:' + pedido.direccion
-            + '.<br>'
-            + 'Pedido' + pedido.id + ':' + '<br>' + pedido.productos_pedidos
-            + 'A cobrar:' + pedido.precio_total
-    };
+    // Envía datos del pedido por correo al admin. Explicada en el README.
 }
 exports.enviarCorreo = enviarCorreo;
