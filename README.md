@@ -38,25 +38,26 @@ Entonces decidimos avanzar por otra opción:
 ### Entidades
 Arrancamos el proceso de DDD eligiendo 4 entidades:
 
-- `Producto` que va a tener la información sobre cada producto (nombre, imagen y precio).
-- `ListadoProductos` que representa la información de lo que el admin planteó como pantalla principal (array de todos los 30 productos). 
+- `Producto` que va a tener la información sobre cada producto (nombre, imagen, precio).
+- `ListadoSinBusqueda` que representa la información de lo que el admin planteó como pantalla principal (array de todos los 30 productos). 
+- `ListadoConBusqueda` que representa a todos los productos que coinciden con la palabra escrita por el usuario en el buscador. Va cambiando según cambie la búsqueda.
 - `Carrito` que representa todos los productos que el usuario seleccionó para generar un pedido y tiene un id identificador del usuario al momento de realizar el pedido y la cantidad de un mismo producto seleccionado. Aunque la consigna no pida explícitamente la cantidad, entendemos que un cliente puede querer varios ejemplares de un mismo producto. 
 - `Pedido` que tiene toda la información del carrito, más la dirección que ingresa el usuario en el formulario, para enviarlo por mail al administrador.
 - No consideramos que listado de resultados de búsqueda sea una entidad porque solo serviría para el admin tenga un registro de los productos que fueron buscados, y esto es algo que la consigna no pide así que simplificamos. :P
 
 Las relaciones entre entidades serían así:
-- `ListadoProductos` tiene muchos `Producto`.
-- `Carrito` tiene muchos `Producto` sacados del `ListadoProductos`.
+- `ListadoSinBusqueda` tiene muchos `Producto`.
+- `ListadoConBusqueda` busca dentro del array `ListadoSinBusqueda` los productos cuyo nombre incluya la palabra_buscada.
+- `Carrito` tiene muchos `Producto` sacados del `ListadoConBusqueda`.
 - `Pedido` tiene todos los `Producto` sacados del `Carrito`.
 
-Luego pensamos también las reglas para estas entidades:
-- Ingresar dirección → el usuario necesita sí o sí ingresar una dirección para generar el pedido. 
-- Guardar pedido → la web necesita sí o sí guardar el pedido del usuario una vez que está confirmado, para que se envíe un mail con el pedido al admin.
+Luego de una exhaustiva investigación (el diego) llegamos a la conclusión de que no hay restricciones en las relaciones entre estas entidades; es decir, no hay reglas.
 
 ## ABM
 ### Acciones
 - `Producto`: ninguna acción, ya sabemos que son 30 productos en total que ya existen en el JSON, ni el admin ni el usuario van a actualizar nada.
-- `ListadoProductos`: consultarlo para la búsqueda de productos por nombre.
+- `ListadoSinBusqueda`: consultarlo para la búsqueda de productos por nombre.
+- `ListadoConBusqueda`: VER!!!!!!!!!!!!!!
 - `Carrito`: agrega y borra productos, por cantidad y por tipo de producto.
 - `Pedido`: ninguna acción, porque se guarda esta información de manera automática, ni el usuario ni el admin influyen en lo que pasa después de que el usuario clickea el botón "realizar pedido".
 
