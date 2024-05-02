@@ -44,12 +44,14 @@ Se utiliza de la siguiente forma:
     - Luego, se configura la API Key en tu aplicación:
     const sgMail = require('@sendgrid/mail');
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+    
 
     SENDGRID_API_KEY tiene que ser una variable de entorno que contenga tu API Key de SendGrid.
 
 4. Crear función que usa la API de Twilio SendGrid. En el Modelo.ts ya armamos la firma de la función. A continuación mostramos un ejemplo de cómo podría ser su cuerpo:
 
-export function enviarCorreo(pedido:Pedido) {
+ ```
+ export function enviarCorreo(pedido:Pedido) {
     const msg = {
         to: 'direccionadmin@email.com', // Dirección de mail del admin hardcodeada 
         from: 'direccionadmin@email.com', 
@@ -59,13 +61,14 @@ export function enviarCorreo(pedido:Pedido) {
         + 'Pedido' + pedido.id + ':' + '<br>' + pedido.productos_pedidos
         + 'A cobrar:' + pedido.precio_total
     };
-}
+} 
+```
 
 
 ## Decisiones de modelado con DDD
 
 ### Entidades
-Arrancamos el proceso de DDD eligiendo 4 entidades:
+Arrancamos el proceso de DDD eligiendo 6 entidades:
 
 - `Producto` que va a tener la información sobre cada producto (id, nombre, imagen, precio).
 - `ListadoProductos` que representa la información de lo que el admin planteó como pantalla principal (array de todos los 30 productos). 

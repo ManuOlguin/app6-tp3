@@ -1,6 +1,29 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.enviarCorreo = exports.agregarPedido = exports.calcularTotalPedido = exports.mostrarProductosCarrito = exports.eliminarCantidadProductosCarrito = exports.agregarProductoAlCarrito = exports.mostrarProductosFiltrados = exports.filtrarProductos = exports.mostrarProductos = void 0;
+exports.enviarCorreo = exports.agregarPedido = exports.calcularTotalPedido = exports.mostrarProductosCarrito = exports.eliminarCantidadProductosCarrito = exports.agregarProductoAlCarrito = exports.filtrarProductos = exports.mostrarProductos = void 0;
 function mostrarProductos() {
     // muestra todos los productos en la pagina principal en un mapa
 }
@@ -10,11 +33,6 @@ function filtrarProductos(productos, palabra_buscada) {
     return productos.filter(listadoProducots => listadoProductos.listado.nombre.toLowerCase().includes(palabra_buscada.toLowerCase()));
 }
 exports.filtrarProductos = filtrarProductos;
-function mostrarProductosFiltrados() {
-    // muestra en pantalla los productos filtrados por la búsqueda. Por ejemplo:
-    // const productosFiltrados: Producto[] = filtrarProductos(listadoConBusqueda);
-}
-exports.mostrarProductosFiltrados = mostrarProductosFiltrados;
 // Función para agregar un producto al carrito
 function agregarProductoAlCarrito(carrito, producto, cantidad) {
     // Se verifica que el producto no esté repetido y en ese caso, se agrega al Carrito junto con su cantidad
@@ -40,7 +58,32 @@ function agregarPedido(direccion, carrito) {
     // Envía a la base de datos los datos del pedido para que sea creado
 }
 exports.agregarPedido = agregarPedido;
-function enviarCorreo(pedido) {
-    // Envía datos del pedido por correo al admin. Explicada en el README.
+// Importa la biblioteca dotenv
+const dotenv = __importStar(require("dotenv"));
+// Llama al método config() para cargar las variables de entorno desde el archivo .env
+dotenv.config({ path: 'sendgrid.env' });
+// Ahora puedes acceder a las variables de entorno utilizando process.env
+const sendgridApiKey = process.env.SENDGRID_API_KEY;
+function enviarCorreo() {
+    // Envía datos del pedido por correo al admin.
+    const sgMail = require('@sendgrid/mail');
+    sgMail.setApiKey(sendgridApiKey);
+    const msg = {
+        to: 'finalhistoriadelarte@gmail.com', // Dirección de mail del admin hardcodeada 
+        from: 'finalhistoriadelarte@gmail.com',
+        subject: 'Sending with SendGrid is Fun',
+        text: 'and easy to do anywhere, even with Node.js',
+        html: '<strong>and easy to do anywhere, even with Node.js</strong>',
+    };
+    sgMail
+        .send(msg)
+        .then(() => {
+        console.log('Email sent');
+    })
+        .catch((error) => {
+        console.error(error);
+    });
 }
 exports.enviarCorreo = enviarCorreo;
+;
+enviarCorreo();
