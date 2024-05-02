@@ -63,12 +63,13 @@ export function agregarPedido(direccion: string, carrito: Carrito): Pedido {
 // Importa la biblioteca dotenv
 import * as dotenv from 'dotenv';
 
-// Llama al método config() para cargar las variables de entorno desde el archivo .env
+// Llama al método config() para cargar 
+// las variables de entorno desde el archivo .env
 dotenv.config({ path: 'sendgrid.env' });
 
-// Ahora puedes acceder a las variables de entorno utilizando process.env
+// Ahora puedes acceder a las variables 
+// de entorno utilizando process.env
 const sendgridApiKey = process.env.SENDGRID_API_KEY;
-
 export function enviarCorreo() {
  // Envía datos del pedido por correo al admin.
     const sgMail = require('@sendgrid/mail');
