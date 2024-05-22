@@ -26,13 +26,13 @@ export interface Pedido {
     precio_total: number;
 }
 
-export function mostrarProductos(): ListadoProductos {
-    // muestra todos los productos en la pagina principal en un mapa
+export async function traerProductos(): ListadoProductos {
+    // trae todos los productos de la base de datos
 }
 
 export function filtrarProductos(productos: ListadoProductos, palabra_buscada: string): ListadoConBusqueda {
     // Busca el producto por el nombre en el array de productos
-    return productos.filter(listadoProducots => listadoProductos.listado.nombre.toLowerCase().includes(palabra_buscada.toLowerCase()));
+    return productos.filter(listadoProductos => listadoProductos.listado.nombre.toLowerCase().includes(palabra_buscada.toLowerCase()));
 }
 
 // Función para agregar un producto al carrito
@@ -54,7 +54,7 @@ export function calcularTotalPedido(productos: Carrito) : number {
     //  Calcula el precio total de todos los productos en el carrito
 }
 
-export function agregarPedido(direccion: string, carrito: Carrito): Pedido {
+export async function agregarPedido(direccion: string, carrito: Carrito): Pedido {
     // Cuando el usuario hace click en el botón "Confirmar pedido"
     // Llama a calcularTotalPedido
     // Envía a la base de datos los datos del pedido para que sea creado
@@ -93,3 +93,18 @@ export function enviarCorreo() {
 
 
 enviarCorreo();
+
+
+/* EJEMPLO FUNCIONES DE MODELO
+export async function agregarCiudad(nombre: string): Promise<Ciudad> {
+    // Agrega una nueva Ciudad a la base de datos
+    const db = await abrirConexion();
+
+    const temperatura = 0;
+    const query = `INSERT INTO Ciudad (nombre, temperatura) VALUES ('${nombre}', ${temperatura})`;
+    await db.run(query);
+
+    return { nombre, temperatura };
+}
+
+*/
