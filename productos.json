@@ -1,0 +1,183 @@
+[
+    {
+      "id": 1,
+      "nombre": "Bufanda de Lana para Perros",
+      "imagen": "bufanda_lana_perros.jpg",
+      "precio": 15.99
+    },
+    {
+      "id": 2,
+      "nombre": "Bufanda de Punto para Gatos",
+      "imagen": "bufanda_punto_gatos.jpg",
+      "precio": 12.49
+    },
+    {
+      "id": 3,
+      "nombre": "Bufanda de Navidad para Perros",
+      "imagen": "bufanda_navidad_perros.jpg",
+      "precio": 9.99
+    },
+    {
+      "id": 4,
+      "nombre": "Bufanda de Rayas para Gatos",
+      "imagen": "bufanda_rayas_gatos.jpg",
+      "precio": 8.99
+    },
+    {
+      "id": 5,
+      "nombre": "Bufanda de Cuadros para Perros",
+      "imagen": "bufanda_cuadros_perros.jpg",
+      "precio": 14.99
+    },
+    {
+      "id": 6,
+      "nombre": "Bufanda de Algodón para Gatos",
+      "imagen": "bufanda_algodon_gatos.jpg",
+      "precio": 10.99
+    },
+    {
+      "id": 7,
+      "nombre": "Bufanda de Invierno para Perros",
+      "imagen": "bufanda_invierno_perros.jpg",
+      "precio": 17.99
+    },
+    {
+      "id": 8,
+      "nombre": "Bufanda de Seda para Gatos",
+      "imagen": "bufanda_seda_gatos.jpg",
+      "precio": 19.99
+    },
+    {
+      "id": 9,
+      "nombre": "Bufanda a Cuadros para Perros",
+      "imagen": "bufanda_cuadros_perros_2.jpg",
+      "precio": 11.99
+    },
+    {
+      "id": 10,
+      "nombre": "Bufanda de Lana Tejida para Gatos",
+      "imagen": "bufanda_lana_tejida_gatos.jpg",
+      "precio": 13.99
+    },
+    {
+      "id": 11,
+      "nombre": "Bufanda de Punto Suave para Perros",
+      "imagen": "bufanda_punto_suave_perros.jpg",
+      "precio": 16.99
+    },
+    {
+      "id": 12,
+      "nombre": "Bufanda de Tela Transpirable para Gatos",
+      "imagen": "bufanda_tela_transpirable_gatos.jpg",
+      "precio": 9.49
+    },
+    {
+      "id": 13,
+      "nombre": "Bufanda de Moda para Perros",
+      "imagen": "bufanda_moda_perros.jpg",
+      "precio": 18.49
+    },
+    {
+      "id": 14,
+      "nombre": "Bufanda de Lunares para Gatos",
+      "imagen": "bufanda_lunares_gatos.jpg",
+      "precio": 7.99
+    },
+    {
+      "id": 15,
+      "nombre": "Bufanda de Algodón Orgánico para Perros",
+      "imagen": "bufanda_algodon_organico_perros.jpg",
+      "precio": 22.99
+    },
+    {
+      "id": 16,
+      "nombre": "Bufanda de Encaje para Gatos",
+      "imagen": "bufanda_encaje_gatos.jpg",
+      "precio": 10.49
+    },
+    {
+      "id": 17,
+      "nombre": "Bufanda de Diseño para Perros",
+      "imagen": "bufanda_diseno_perros.jpg",
+      "precio": 21.99
+    },
+    {
+      "id": 18,
+      "nombre": "Bufanda de Franela para Gatos",
+      "imagen": "bufanda_franela_gatos.jpg",
+      "precio": 12.99
+    },
+    {
+      "id": 19,
+      "nombre": "Bufanda Elegante para Perros",
+      "imagen": "bufanda_elegante_perros.jpg",
+      "precio": 24.99
+    },
+    {
+      "id": 20,
+      "nombre": "Bufanda de Terciopelo para Gatos",
+      "imagen": "bufanda_terciopelo_gatos.jpg",
+      "precio": 14.49
+    },
+    {
+      "id": 21,
+      "nombre": "Bufanda de Cachemira para Perros",
+      "imagen": "bufanda_cachemira_perros.jpg",
+      "precio": 29.99
+    },
+    {
+      "id": 22,
+      "nombre": "Bufanda de Croché para Gatos",
+      "imagen": "bufanda_croche_gatos.jpg",
+      "precio": 11.49
+    },
+    {
+      "id": 23,
+      "nombre": "Bufanda de Estilo Clásico para Perros",
+      "imagen": "bufanda_estilo_clasico_perros.jpg",
+      "precio": 26.99
+    },
+    {
+      "id": 24,
+      "nombre": "Bufanda de Poliéster para Gatos",
+      "imagen": "bufanda_poliestr_gatos.jpg",
+      "precio": 9.99
+    },
+    {
+      "id": 25,
+      "nombre": "Bufanda de Estampado para Perros",
+      "imagen": "bufanda_estampado_perros.jpg",
+      "precio": 23.49
+    },
+    {
+      "id": 26,
+      "nombre": "Bufanda de Tejido Grueso para Gatos",
+      "imagen": "bufanda_tejido_grueso_gatos.jpg",
+      "precio": 13.99
+    },
+    {
+      "id": 27,
+      "nombre": "Bufanda de Punto de Cable para Perros",
+      "imagen": "bufanda_punto_cable_perros.jpg",
+      "precio": 19.49
+    },
+    {
+      "id": 28,
+      "nombre": "Bufanda de Tela de Algodón para Gatos",
+      "imagen": "bufanda_tela_algodon_gatos.jpg",
+      "precio": 10.99
+    },
+    {
+      "id": 29,
+      "nombre": "Bufanda de Estilo Casual para Perros",
+      "imagen": "bufanda_estilo_casual_perros.jpg",
+      "precio": 15.49
+    },
+    {
+      "id": 30,
+      "nombre": "Bufanda de Punto Fino para Gatos",
+      "imagen": "bufanda_punto_fino_gatos.jpg",
+      "precio": 8.49
+    }
+  ]
+  

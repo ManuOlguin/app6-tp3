@@ -1,3 +1,8 @@
+import fs from 'fs';
+import dotenv from 'dotenv';
+import nodemailer from 'nodemailer';
+dotenv.config();
+
 export interface Producto {
     id: number,
     nombre: string,
@@ -21,81 +26,121 @@ export interface Carrito {
 export interface Pedido {
     id: string;
     productos_pedidos: Carrito;
-    direccion: string;
     nombre_cliente: string;
     precio_total: number;
 }
 
-export async function traerProductos(): ListadoProductos {
-    // trae todos los productos de la base de datos
+//checkeada
+export async function traerProductos(filePath: string): Promise<Producto[]> {
+    // trae todos los productos
+    return new Promise((resolve, reject) => {
+        fs.readFile(filePath, 'utf8', (err, data) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(JSON.parse(data));
+            }
+        });
+    });
 }
 
-export function filtrarProductos(productos: ListadoProductos, palabra_buscada: string): ListadoConBusqueda {
+//checkeada
+export function filtrarProductos(productosTotales: ListadoProductos, palabra_buscada: string): ListadoConBusqueda {
     // Busca el producto por el nombre en el array de productos
-    return productos.filter(listadoProductos => listadoProductos.listado.nombre.toLowerCase().includes(palabra_buscada.toLowerCase()));
+    let productos: ListadoProductos = { listado: productosTotales.listado.filter(producto => producto.nombre.toLowerCase().includes(palabra_buscada.toLowerCase())) };
+
+    return { palabra_buscada, productos };
 }
 
+//checkeada
 // Función para agregar un producto al carrito
 export function agregarProductoAlCarrito(carrito:Carrito, producto: Producto, cantidad: number,): Carrito {
     // Se verifica que el producto no esté repetido y en ese caso, se agrega al Carrito junto con su cantidad
     // En caso de estar repetido, se le suma la nueva cantidad a la cantidad anterior 
+    const index = carrito.productos_carrito.findIndex(p => p.producto.id === producto.id);
+
+    if (index !== -1) {
+        carrito.productos_carrito[index].cantidad += cantidad;
+    } else {
+        carrito.productos_carrito.push({producto: producto,  cantidad: cantidad });
+    }
+    return carrito;
 }
 
+//checkeada
 export function eliminarCantidadProductosCarrito(carrito:Carrito, producto: Producto, cantidad: number,): Carrito {
     // Eliminar cantidad de un producto
     // En caso de quedar en 0, se borra el producto del carrito
+    const index = carrito.productos_carrito.findIndex(p => p.producto.id === producto.id);
+
+    if (index !== -1) {
+        carrito.productos_carrito[index].cantidad -= cantidad;
+        if (carrito.productos_carrito[index].cantidad <= 0) {
+            carrito.productos_carrito.splice(index, 1);
+        }
+    } else {
+        //producto no encontrado
+        console.log('Producto no encontrado');
+    }
+    return carrito;
 }
 
+//no se para que es
 export function mostrarProductosCarrito(carrito:Carrito): void {
     // Función para mostrar los productos en el carrito
 }
 
+//checkeada
 export function calcularTotalPedido(productos: Carrito) : number {
     //  Calcula el precio total de todos los productos en el carrito
+    let total = 0;
+    productos.productos_carrito.forEach(p => {
+        total += p.producto.precio * p.cantidad;
+    });
+    return total;
+
 }
 
-export async function agregarPedido(direccion: string, carrito: Carrito): Pedido {
+export async function agregarPedido(nombre: string, carrito: Carrito): Promise<Pedido> {
     // Cuando el usuario hace click en el botón "Confirmar pedido"
     // Llama a calcularTotalPedido
     // Envía a la base de datos los datos del pedido para que sea creado
+    const total = calcularTotalPedido(carrito);
+    enviarCorreo(carrito, nombre, total);
+    return { id: '1', nombre_cliente: nombre, productos_pedidos: carrito, precio_total: total };
 }
 
-// Importa la biblioteca dotenv
-import * as dotenv from 'dotenv';
-
-// Llama al método config() para cargar 
-// las variables de entorno desde el archivo .env
-dotenv.config({ path: 'sendgrid.env' });
-
-// Ahora puedes acceder a las variables 
-// de entorno utilizando process.env
-const sendgridApiKey = process.env.SENDGRID_API_KEY;
-export function enviarCorreo() {
- // Envía datos del pedido por correo al admin.
-    const sgMail = require('@sendgrid/mail');
-    sgMail.setApiKey(sendgridApiKey);
-    const msg = {
-        to: 'finalhistoriadelarte@gmail.com', // Dirección de mail del admin hardcodeada 
-        from: 'finalhistoriadelarte@gmail.com', 
-        subject: 'Sending with SendGrid is Fun',
-        text: 'and easy to do anywhere, even with Node.js',
-        html: '<strong>and easy to do anywhere, even with Node.js</strong>',
-      }
-      sgMail
-        .send(msg)
-        .then(() => {
-          console.log('Email sent')
-        })
-        .catch((error) => {
-          console.error(error)
-        })
-    };
 
 
-enviarCorreo();
 
+    const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: process.env.EMAIL,
+          pass: process.env.EMAILPASS
+        }
+      });
+    export function enviarCorreo(carrito: Carrito, nombre: string, total: number) {
+        const productos = carrito.productos_carrito.map(item => `${item.cantidad} x ${item.producto.nombre}`).join(', ');
 
-/* EJEMPLO FUNCIONES DE MODELO
+        const mailOptions = {
+            from: 'ecommerceprogra@gmail.com',
+            to: 'ecommerceprogra@gmail.com',
+            subject: '¡Nuevo pedido!',
+            text:  nombre +'! Hiciste un nuevo pedido por un total de $' + total + '. Los productos son: ' + productos
+          };
+
+          transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+              console.log(error);
+            } else {
+              console.log('Email sent: ' + info.response);
+            }
+          });
+    }
+    
+
+/* EJEMPLO FUNCIONES DE MODELO DE DIEGO
 export async function agregarCiudad(nombre: string): Promise<Ciudad> {
     // Agrega una nueva Ciudad a la base de datos
     const db = await abrirConexion();
@@ -108,3 +153,44 @@ export async function agregarCiudad(nombre: string): Promise<Ciudad> {
 }
 
 */
+
+// TESTING
+
+/*traerProductos('./productos.json')
+    .then(data => console.log(filtrarProductos({ listado: data }, 'gatos').productos.listado)
+)
+    .catch(err => console.error(err));*/
+
+/*
+const carritoPrueba: Carrito = {
+    productos_carrito: [
+        {
+            producto: {
+                id: 1,
+                nombre: 'Producto 1',
+                precio: 100,
+                imagen: 'url_to_imagen_1'
+            },
+            cantidad: 2
+        },
+        {
+            producto: {
+                id: 2,
+                nombre: 'Producto 2',
+                precio: 200,
+                imagen: 'url_to_imagen_2'
+            },
+            cantidad: 3
+        }
+    ]
+};
+    enviarCorreo(carritoPrueba, 'nombre', 1000)
+
+const productoPrueba: Producto = {
+    id: 2,
+    nombre: 'Producto 2',
+    precio: 200,
+    imagen: 'url_to_imagen_2'
+}
+
+console.log(eliminarCantidadProductosCarrito( carritoPrueba, productoPrueba, 3))*/

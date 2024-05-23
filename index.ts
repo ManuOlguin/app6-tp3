@@ -1,6 +1,5 @@
 import express, { Request, Response, Express, NextFunction } from 'express';
 import dotenv from 'dotenv';
-import sqlite3, { open } from 'sqlite';
 import { agregarPedido, traerProductos } from './src/Modelo';
  
 dotenv.config();
@@ -18,14 +17,13 @@ app.post("/v1/pedido/agregar", async (req: Request, res: Response, next: NextFun
     try {
         const direccion = req.body.direccion;
         const carrito = req.body.carrito;
+        const nombre = req.body.nombre;
 
-        await agregarPedido(direccion, carrito);
+        await agregarPedido(direccion, carrito, nombre);
         res.send("OK");
     } catch (error) {
         next(error);
     }
-
-
 });
 
 
@@ -33,12 +31,6 @@ app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
 
-async function abrirConexion() {
-    return open({
-        filename: './db.sqlite',
-        driver: sqlite3.Database
-    })
-}
 
 function errorHandler(
     error: Error, request: Request, response: Response, next: NextFunction
