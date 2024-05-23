@@ -1,6 +1,8 @@
 import fs from 'fs';
 import dotenv from 'dotenv';
 import nodemailer from 'nodemailer';
+import sqlite3  from 'sqlite3';
+import { open } from 'sqlite';
 dotenv.config();
 
 export interface Producto {
@@ -28,6 +30,23 @@ export interface Pedido {
     productos_pedidos: Carrito;
     nombre_cliente: string;
     precio_total: number;
+}
+
+async function abrirConexion() {
+    return open({
+        filename: 'db.sqlite',
+        driver: sqlite3.Database
+    })
+}
+
+
+export async function consultarListado(): Promise<Producto[]> {
+    // Arma un Listado que contiene todas las ciudades en la base de datos
+    const db = await abrirConexion();
+
+    const productos: Producto[] = await db.all<Producto[]>('SELECT * FROM Producto');
+    console.log(productos);
+    return productos;
 }
 
 //checkeada
