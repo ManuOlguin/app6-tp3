@@ -1,6 +1,6 @@
 import express, { Request, Response, Express, NextFunction } from 'express';
 import dotenv from 'dotenv';
-import { agregarPedido, traerProductos } from './src/Modelo';
+import { consultarListado } from './src/Modelo';
  
 dotenv.config();
 
@@ -13,14 +13,11 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 
-app.post("/v1/pedido/agregar", async (req: Request, res: Response, next: NextFunction) => {
+app.get("/v1/productos/consultar", async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const direccion = req.body.direccion;
-        const carrito = req.body.carrito;
-        const nombre = req.body.nombre;
-
-        await agregarPedido(direccion, carrito, nombre);
-        res.send("OK");
+        
+        
+        res.send(await consultarListado());
     } catch (error) {
         next(error);
     }

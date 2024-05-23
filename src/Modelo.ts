@@ -11,12 +11,9 @@ export interface Producto {
     imagen: string,
     precio: number
 }
-export interface ListadoProductos {
-    listado: Producto[]
-}
 export interface ListadoConBusqueda {
     palabra_buscada: string,
-    productos: ListadoProductos
+    productos: Producto[]
 }
 export interface ProductoEnCarrito {
     producto: Producto,
@@ -64,9 +61,9 @@ export async function traerProductos(filePath: string): Promise<Producto[]> {
 }
 
 //checkeada
-export function filtrarProductos(productosTotales: ListadoProductos, palabra_buscada: string): ListadoConBusqueda {
+export function filtrarProductos(productosTotales: Producto[], palabra_buscada: string): ListadoConBusqueda {
     // Busca el producto por el nombre en el array de productos
-    let productos: ListadoProductos = { listado: productosTotales.listado.filter(producto => producto.nombre.toLowerCase().includes(palabra_buscada.toLowerCase())) };
+    let productos: Producto[] = productosTotales.filter(producto => producto.nombre.toLowerCase().includes(palabra_buscada.toLowerCase())) ;
 
     return { palabra_buscada, productos };
 }
@@ -128,10 +125,6 @@ export async function agregarPedido(nombre: string, carrito: Carrito): Promise<P
     enviarCorreo(carrito, nombre, total);
     return { id: '1', nombre_cliente: nombre, productos_pedidos: carrito, precio_total: total };
 }
-
-
-
-
     const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
