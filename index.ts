@@ -23,13 +23,13 @@ app.get("/v1/productos/consultar", async (req: Request, res: Response, next: Nex
     }
 });
 
-app.post("/v1/pedido/agregar", async (req: Request, res: Response, next: NextFunction) => {
+app.post("/v1/pedido/enviar", async (req: Request, res: Response, next: NextFunction) => {
     try {
         
         const nombre = req.body.nombre;
         const carrito = req.body.carrito;
-        
-        res.send(await agregarPedido(nombre, carrito));
+        const direccion = req.body.direccion;
+        res.send(await agregarPedido(nombre, carrito, direccion));
     } catch (error) {
         next(error);
     }
