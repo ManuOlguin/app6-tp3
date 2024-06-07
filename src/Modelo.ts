@@ -16,7 +16,7 @@ export interface ListadoConBusqueda {
     productos: Producto[]
 }
 export interface ProductoEnCarrito {
-    producto: Producto,
+    id_producto: number,
     cantidad: number,
 }
 export interface Carrito {
@@ -47,11 +47,14 @@ export async function consultarListado(): Promise<Producto[]> {
 }
 
 
-export function calcularTotalPedido(productos: Carrito) : number {
+export function calcularTotalPedido(carrito: Carrito, productos: Producto[]) : number {
     //  Calcula el precio total de todos los productos en el carrito
     let total = 0;
-    productos.productos_carrito.forEach(p => {
-        total += p.producto.precio * p.cantidad;
+    carrito.productos_carrito.forEach(p => {
+        const productoEncontrado = productos.find(prod => prod.id === p.id_producto);
+        if (productoEncontrado) {
+            total += productoEncontrado.precio * p.cantidad;
+        }
     });
     return total;
 
@@ -61,8 +64,9 @@ export async function agregarPedido(nombre: string, carrito: Carrito, direccion:
     // Cuando el usuario hace click en el botón "Confirmar pedido"
     // Llama a calcularTotalPedido
     // Envía a la base de datos los datos del pedido para que sea creado
-    const total = calcularTotalPedido(carrito);
-    enviarCorreo(carrito, nombre, total, direccion);
+    const productos = await consultarListado();
+    const total = calcularTotalPedido(carrito, productos);
+    enviarCorreo(carrito, nombre, total, direccion, productos);
     return "OK";
 }
     const transporter = nodemailer.createTransport({
@@ -72,14 +76,14 @@ export async function agregarPedido(nombre: string, carrito: Carrito, direccion:
           pass: process.env.EMAILPASS
         }
       });
-    export function enviarCorreo(carrito: Carrito, nombre: string, total: number, direccion: string) {
-        const productos = carrito.productos_carrito.map(item => `${item.cantidad} x ${item.producto.nombre}`).join(', ');
+    export function enviarCorreo(carrito: Carrito, nombre: string, total: number, direccion: string, productos: Producto[]) {
+        const productosMapeados = carrito.productos_carrito.map(item => `${item.cantidad} x ${productos.find(prod => prod.id === item.id_producto)?.nombre}`).join(', ');
 
         const mailOptions = {
             from: 'ecommerceprogra@gmail.com',
             to: direccion,
             subject: '¡Nuevo pedido!',
-            text:  nombre +'! Hiciste un nuevo pedido por un total de $' + total + '. Los productos son: ' + productos
+            text:  nombre +'! Hiciste un nuevo pedido por un total de $' + total + '. Los productos son: ' + productosMapeados
           };
 
           transporter.sendMail(mailOptions, function(error, info){
