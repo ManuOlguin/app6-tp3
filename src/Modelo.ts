@@ -57,13 +57,13 @@ export function calcularTotalPedido(productos: Carrito) : number {
 
 }
 
-export async function agregarPedido(nombre: string, carrito: Carrito, direccion: string): Promise<Pedido> {
+export async function agregarPedido(nombre: string, carrito: Carrito, direccion: string): Promise<string> {
     // Cuando el usuario hace click en el botón "Confirmar pedido"
     // Llama a calcularTotalPedido
     // Envía a la base de datos los datos del pedido para que sea creado
     const total = calcularTotalPedido(carrito);
     enviarCorreo(carrito, nombre, total, direccion);
-    return { id: '1', nombre_cliente: nombre, productos_pedidos: carrito, precio_total: total };
+    return "OK";
 }
     const transporter = nodemailer.createTransport({
         service: 'gmail',

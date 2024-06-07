@@ -1,7 +1,7 @@
 import express, { Request, Response, Express, NextFunction } from 'express';
 import dotenv from 'dotenv';
 import { consultarListado, agregarPedido } from './src/Modelo';
- 
+import * as path from 'path';
 dotenv.config();
 
 const port = process.env.PORT || 8080;
@@ -35,6 +35,21 @@ app.post("/v1/pedido/enviar", async (req: Request, res: Response, next: NextFunc
     }
 });
 
+app.get("/v1/productos/consultarImagen/:id", async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const id = req.params.id;
+        const producto = await consultarListado();
+        const productoBuscado = producto.find(p => p.id === parseInt(id));
+        if (productoBuscado) {
+            const imagePath = path.join(__dirname, 'img', productoBuscado.imagen);
+            res.sendFile(imagePath);
+        } else {
+            res.status(404).send("Producto no encontrado");
+        }
+    } catch (error) {
+        next(error);
+    }
+});
 
 
 app.listen(port, () => {
