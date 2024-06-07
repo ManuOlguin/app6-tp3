@@ -37,26 +37,16 @@ Recibe por body los datos del pedido y envia un mail con los datos ingresados. E
 ```
 {
     "nombre": "John Doe",
-    "direccion": "misupermail@gmail.com",
+    "direccion": "ort.manu03@gmail.com",
     "carrito": {
         "productos_carrito": [
             {
-                "producto": {
-                    "id": 1,
-                    "nombre": "Producto 1",
-                    "precio": 100,
-                    "imagen": "url_to_imagen_1.png"
-                },
+                "id_producto": 1,
                 "cantidad": 2
             },
             {
-                "producto": {
-                    "id": 2,
-                    "nombre": "Producto 2",
-                    "precio": 200,
-                    "imagen": "url_to_imagen_2..png"
-                },
-                "cantidad": 3
+                "id_producto": 3,
+                "cantidad": 2
             }
         ]
     }
@@ -127,7 +117,7 @@ export interface ListadoConBusqueda {
     productos: Producto[]
 }
 export interface ProductoEnCarrito {
-    producto: Producto,
+    id_producto: number,
     cantidad: number,
 }
 export interface Carrito {
@@ -139,6 +129,7 @@ export interface Pedido {
     nombre_cliente: string;
     precio_total: number;
 }
+
 ```
 
 
