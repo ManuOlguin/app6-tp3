@@ -60,24 +60,24 @@ El envio se realiza dede el mail 'ecommerceprogra@gmail.com', en caso de necesit
 Estas son las funciones que armamos para la gestión del carrito de compras.
 
 ```
-// Función para agregar un producto o unidad al carrito
-export function agregarProductoAlCarrito(carrito:Carrito, producto: Producto, cantidad: number,): Carrito {
+    // Función para agregar un producto o unidad al carrito
+export function agregarProductoAlCarrito(carrito:Carrito, id_producto: number, cantidad: number): Carrito {
     // Se verifica que el producto no esté repetido y en ese caso, se agrega al Carrito junto con su cantidad
     // En caso de estar repetido, se le suma la nueva cantidad a la cantidad anterior 
-    const index = carrito.productos_carrito.findIndex(p => p.producto.id === producto.id);
+    const index = carrito.productos_carrito.findIndex(p => p.id_producto === id_producto);
 
     if (index !== -1) {
         carrito.productos_carrito[index].cantidad += cantidad;
     } else {
-        carrito.productos_carrito.push({producto: producto,  cantidad: cantidad });
+        carrito.productos_carrito.push({id_producto: id_producto,  cantidad: cantidad });
     }
     return carrito;
 }
 
-export function eliminarCantidadProductosCarrito(carrito:Carrito, producto: Producto, cantidad: number,): Carrito {
+export function eliminarCantidadProductosCarrito(carrito:Carrito, id_producto: number, cantidad: number,): Carrito {
     // Eliminar cantidad de un producto
     // En caso de quedar en 0, se borra el producto del carrito
-    const index = carrito.productos_carrito.findIndex(p => p.producto.id === producto.id);
+    const index = carrito.productos_carrito.findIndex(p => p.id_producto === id_producto);
 
     if (index !== -1) {
         carrito.productos_carrito[index].cantidad -= cantidad;
