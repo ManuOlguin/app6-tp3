@@ -1,3 +1,150 @@
+# Datos relevantes para el siguiente dev (suerte agus)
+
+## Endpoints
+
+*GET /v1/productos/consultar*
+
+Devuelve un JSON con todos los productos de la base. La estructura de la data es la siguiente:
+
+```
+[
+  {
+    "id": 1,
+    "nombre": "Bufanda de Lana para Perros",
+    "imagen": "bufanda_lana_perros.png",
+    "precio": 1599
+  },
+  {
+    "id": 2,
+    "nombre": "Bufanda de Punto para Gatos",
+    "imagen": "bufanda_punto_gatos.png",
+    "precio": 1249
+  },
+...
+]
+```
+
+
+*GET /v1/productos/consultarImagen/:id*
+
+Devuelve la imagen del producto consultado (por id). Si no lo encuentra devuelve un error 404
+
+
+*POST /v1/pedido/enviar*
+
+Recibe por body los datos del pedido y envia un mail con los datos ingresados. Esta es la estructura de datos requerida:
+
+```
+{
+    "nombre": "John Doe",
+    "direccion": "misupermail@gmail.com",
+    "carrito": {
+        "productos_carrito": [
+            {
+                "producto": {
+                    "id": 1,
+                    "nombre": "Producto 1",
+                    "precio": 100,
+                    "imagen": "url_to_imagen_1.png"
+                },
+                "cantidad": 2
+            },
+            {
+                "producto": {
+                    "id": 2,
+                    "nombre": "Producto 2",
+                    "precio": 200,
+                    "imagen": "url_to_imagen_2..png"
+                },
+                "cantidad": 3
+            }
+        ]
+    }
+}
+```
+Devuelve un "OK" si es exitoso.
+El envio se realiza dede el mail 'ecommerceprogra@gmail.com', en caso de necesitar acceso a este hablar con Manu :)
+
+## Funciones para el front
+
+Estas son las funciones que armamos para la gestión del carrito de compras.
+
+```
+// Función para agregar un producto o unidad al carrito
+export function agregarProductoAlCarrito(carrito:Carrito, producto: Producto, cantidad: number,): Carrito {
+    // Se verifica que el producto no esté repetido y en ese caso, se agrega al Carrito junto con su cantidad
+    // En caso de estar repetido, se le suma la nueva cantidad a la cantidad anterior 
+    const index = carrito.productos_carrito.findIndex(p => p.producto.id === producto.id);
+
+    if (index !== -1) {
+        carrito.productos_carrito[index].cantidad += cantidad;
+    } else {
+        carrito.productos_carrito.push({producto: producto,  cantidad: cantidad });
+    }
+    return carrito;
+}
+
+export function eliminarCantidadProductosCarrito(carrito:Carrito, producto: Producto, cantidad: number,): Carrito {
+    // Eliminar cantidad de un producto
+    // En caso de quedar en 0, se borra el producto del carrito
+    const index = carrito.productos_carrito.findIndex(p => p.producto.id === producto.id);
+
+    if (index !== -1) {
+        carrito.productos_carrito[index].cantidad -= cantidad;
+        if (carrito.productos_carrito[index].cantidad <= 0) {
+            carrito.productos_carrito.splice(index, 1);
+        }
+    } else {
+        //producto no encontrado
+        console.log('Producto no encontrado');
+    }
+    return carrito;
+}
+```
+
+Tambien armamos una función de filtrado para los productos
+
+```
+export function filtrarProductos(productosTotales: Producto[], palabra_buscada: string): ListadoConBusqueda {
+    // Busca el producto por el nombre en el array de productos
+    let productos: Producto[] = productosTotales.filter(producto => producto.nombre.toLowerCase().includes(palabra_buscada.toLowerCase())) ;
+
+    return productos;
+}
+```
+
+## Entidades
+
+```
+export interface Producto {
+    id: number,
+    nombre: string,
+    imagen: string,
+    precio: number
+}
+export interface ListadoConBusqueda {
+    palabra_buscada: string,
+    productos: Producto[]
+}
+export interface ProductoEnCarrito {
+    producto: Producto,
+    cantidad: number,
+}
+export interface Carrito {
+    productos_carrito: ProductoEnCarrito[]; //array de productos pedidos y sus cantidades
+}
+export interface Pedido {
+    id: string;
+    productos_pedidos: Carrito;
+    nombre_cliente: string;
+    precio_total: number;
+}
+```
+
+
+
+TODO LO DE ABAJO ES LA DOCUMENTACIÓN DEL GRUPO ANTERIOR. La dejamos por si hay alguna duda.
+
 ## Investigaciones
 
 El equipo comenzó el desarrollo del proyecto planteando las posibles funciones que necesitaríamos realizar según el enunciando y verificando si conocíamos como llevar a cabo cada una.
