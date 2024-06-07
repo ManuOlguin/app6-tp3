@@ -32,7 +32,7 @@ Devuelve la imagen del producto consultado (por id). Si no lo encuentra devuelve
 
 *POST /v1/pedido/enviar*
 
-Recibe por body los datos del pedido y envia un mail con los datos ingresados. Esta es la estrcutra de datos requerida:
+Recibe por body los datos del pedido y envia un mail con los datos ingresados. Esta es la estructura de datos requerida:
 
 ```
 {
