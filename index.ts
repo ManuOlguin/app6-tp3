@@ -2,11 +2,16 @@ import express, { Request, Response, Express, NextFunction } from 'express';
 import dotenv from 'dotenv';
 import { consultarListado, agregarPedido } from './src/Modelo';
 import * as path from 'path';
+import cors from "cors";
+
 dotenv.config();
 
 const port = process.env.PORT || 8080;
 const app: Express = express();
+app.use(cors());
+
 app.use(express.json());
+
 
 app.get("/", (req: Request, res: Response) => {
     res.send("Hello World!");
